@@ -65,12 +65,24 @@ class Solution
 			int unuse = sc.nextInt();
 			int x=-1, y=-1;
 			int[][] map = new int[100][100];
+            int[] lineList = new int[100];
+            int linePtr = 0;
+            int currentPtr = -1;
 			for(int i = 0; i<100; i++) {
 				for(int j = 0; j<100; j++) {
 					map[i][j] = sc.nextInt();
-					if(map[i][j] == 2) {
+                    if(i == 0 && map[i][j] == 1){
+                        lineList[linePtr++] = j;
+                    }
+					if(i == 99 && map[i][j] == 2) {
 						x = i;
 						y = j;
+                        for(int k = 0; k<lineList.length; k++){
+                            if(lineList[k] == y){
+                                currentPtr = k;
+                                break;
+                            }
+                        }
 					}
 				}
 			}
@@ -81,12 +93,18 @@ class Solution
 				for(int i = 1; i<=2; i++) {
 					nx = x+mv[i][0];
 					ny = y+mv[i][1];
-					while(nx>=0 && nx<100 && ny>=0 && ny<100 && map[nx][ny] != 0) {
-						nowMv = i;
-						x = nx;
-						y = ny;
-						nx = x+mv[i][0];
-						ny = y+mv[i][1];
+					if(nx>=0 && nx<100 && ny>=0 && ny<100 && map[nx][ny] != 0) {
+                        nowMv = i;
+                        if(i == 2) {
+                        	currentPtr--;
+                        	ny = lineList[currentPtr];
+                        	y = ny;
+                        }
+                        else if(i == 1){
+                        	currentPtr++;
+                        	ny = lineList[currentPtr];
+                        	y = ny;
+                        }
 					}
 					if(nowMv != 0) break;
 				}
@@ -97,11 +115,8 @@ class Solution
 					x = nx;
 					y = ny;
 				}
-				//System.out.println("now : "+x+", "+y);
 			}
 			System.out.println("#"+test_case+" "+y);
-		}
-			
-			
-	}
+		}		
+	}			
 }
