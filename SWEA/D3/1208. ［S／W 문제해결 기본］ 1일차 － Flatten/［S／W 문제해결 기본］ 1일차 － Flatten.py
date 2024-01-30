@@ -1,56 +1,84 @@
-# 기본 제공코드는 임의 수정해도 관계 없습니다. 단, 입출력 포맷 주의
-# 아래 표준 입출력 예제 필요시 참고하세요.
+/////////////////////////////////////////////////////////////////////////////////////////////
+// 기본 제공코드는 임의 수정해도 관계 없습니다. 단, 입출력 포맷 주의
+// 아래 표준 입출력 예제 필요시 참고하세요.
+// 표준 입력 예제
+// int a;
+// double b;
+// char g;
+// String var;
+// long AB;
+// a = sc.nextInt();                           // int 변수 1개 입력받는 예제
+// b = sc.nextDouble();                        // double 변수 1개 입력받는 예제
+// g = sc.nextByte();                          // char 변수 1개 입력받는 예제
+// var = sc.next();                            // 문자열 1개 입력받는 예제
+// AB = sc.nextLong();                         // long 변수 1개 입력받는 예제
+/////////////////////////////////////////////////////////////////////////////////////////////
+// 표준 출력 예제
+// int a = 0;                            
+// double b = 1.0;               
+// char g = 'b';
+// String var = "ABCDEFG";
+// long AB = 12345678901234567L;
+//System.out.println(a);                       // int 변수 1개 출력하는 예제
+//System.out.println(b); 		       						 // double 변수 1개 출력하는 예제
+//System.out.println(g);		       						 // char 변수 1개 출력하는 예제
+//System.out.println(var);		       				   // 문자열 1개 출력하는 예제
+//System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
+/////////////////////////////////////////////////////////////////////////////////////////////
+import java.util.Scanner;
+import java.io.FileInputStream;
 
-# 표준 입력 예제
-'''
-a = int(input())                        정수형 변수 1개 입력 받는 예제
-b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제 
-d = float(input())                      실수형 변수 1개 입력 받는 예제
-e, f, g = map(float, input().split())   실수형 변수 3개 입력 받는 예제
-h = input()                             문자열 변수 1개 입력 받는 예제
-'''
+/*
+   사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
+   이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
+ */
+class Solution
+{
+	public static void main(String args[]) throws Exception
+	{
+		/*
+		   아래의 메소드 호출은 앞으로 표준 입력(키보드) 대신 input.txt 파일로부터 읽어오겠다는 의미의 코드입니다.
+		   여러분이 작성한 코드를 테스트 할 때, 편의를 위해서 input.txt에 입력을 저장한 후,
+		   이 코드를 프로그램의 처음 부분에 추가하면 이후 입력을 수행할 때 표준 입력 대신 파일로부터 입력을 받아올 수 있습니다.
+		   따라서 테스트를 수행할 때에는 아래 주석을 지우고 이 메소드를 사용하셔도 좋습니다.
+		   단, 채점을 위해 코드를 제출하실 때에는 반드시 이 메소드를 지우거나 주석 처리 하셔야 합니다.
+		 */
+		//System.setIn(new FileInputStream("res/input.txt"));
 
-# 표준 출력 예제
-'''
-a, b = 6, 3
-c, d, e = 1.0, 2.5, 3.4
-f = "ABC"
-print(a)                                정수형 변수 1개 출력하는 예제
-print(b, end = " ")                     줄바꿈 하지 않고 정수형 변수와 공백을 출력하는 예제
-print(c, d, e)                          실수형 변수 3개 출력하는 예제
-print(f)                                문자열 1개 출력하는 예제
-'''
+		/*
+		   표준입력 System.in 으로부터 스캐너를 만들어 데이터를 읽어옵니다.
+		 */
+		Scanner sc = new Scanner(System.in);
+		int T;
+		T=10;
+		/*
+		   여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
+		*/
 
-
-
-
-'''
-      아래의 구문은 input.txt 를 read only 형식으로 연 후,
-      앞으로 표준 입력(키보드) 대신 input.txt 파일로부터 읽어오겠다는 의미의 코드입니다.
-      여러분이 작성한 코드를 테스트 할 때, 편의를 위해서 input.txt에 입력을 저장한 후,
-      아래 구문을 이용하면 이후 입력을 수행할 때 표준 입력 대신 파일로부터 입력을 받아올 수 있습니다.
-
-      따라서 테스트를 수행할 때에는 아래 주석을 지우고 이 구문을 사용하셔도 좋습니다.
-      아래 구문을 사용하기 위해서는 import sys가 필요합니다.
-
-      단, 채점을 위해 코드를 제출하실 때에는 반드시 아래 구문을 지우거나 주석 처리 하셔야 합니다.
-'''
-#import sys
-#sys.stdin = open("input.txt", "r")
-
-T = 10
-# 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
-for test_case in range(1, T + 1):
-    # ///////////////////////////////////////////////////////////////////////////////////
-    n = int(input())
-    lst = list(map(int, input().split()))
-    while n:
-        n -= 1
-        topboxidx = lst.index(max(lst))
-        botboxidx = lst.index(min(lst))
-        lst[topboxidx] -= 1
-        lst[botboxidx] += 1
-    answer = max(lst) - min(lst)
-    print(f"#{test_case} {answer}")
-    # ///////////////////////////////////////////////////////////////////////////////////
-
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+			int n = sc.nextInt();
+            sc.nextLine();
+            int[] inp = new int[101];
+            int lp = 101, rp = -1;
+            
+            for(int i = 0; i<100; i++){
+                int nextInp = sc.nextInt();
+                lp = Math.min(lp, nextInp);
+                rp = Math.max(rp, nextInp);
+                inp[nextInp]++;
+            }
+            
+            for(int i = 0; i<n; i++){
+            	inp[rp]--;
+            	inp[rp-1]++;
+            	inp[lp]--;
+            	inp[lp+1]++;
+                while(inp[rp] == 0) rp--;
+                while(inp[lp] == 0) lp++;
+            }
+            
+			System.out.println("#"+test_case+" "+(rp-lp));
+		}
+	}
+}
