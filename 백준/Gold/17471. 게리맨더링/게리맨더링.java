@@ -17,7 +17,7 @@ public class Main {
 		if (now > n) {
 			if (cnt == n || cnt == 0) // 0개선택 또는 다선택시 안함
 				return;
-			if(checkAvail()) {
+			if(checkAvail(true) && checkAvail(false)) {
 				cntAnswer();
 			}
 			return;
@@ -28,11 +28,11 @@ public class Main {
 		selectCity(now + 1, cnt);
 	}
 
-	static boolean checkAvail() {
+	static boolean checkAvail(boolean type) {
 		boolean[] tmpVisit = new boolean[n + 1];
 		int startIdx = -1;
 		for (int i = 1; i <= n; i++) {
-			if (visit[i]) {
+			if (visit[i] == type) {
 				startIdx = i;
 				break;
 			}
@@ -43,39 +43,14 @@ public class Main {
 		while (!q.isEmpty()) {
 			int now = q.poll();
 			for(int next: connect[now]) {
-				if(visit[next] && !tmpVisit[next]) { // 선택된놈이고, bfs에서 미선택인경우
+				if(visit[next] == type && !tmpVisit[next]) {
 					tmpVisit[next] = true;
 					q.add(next);
 				}
 			}
 		}
 		for(int i = 1; i<=n; i++) {
-			if(visit[i] && !tmpVisit[i]) { // 선택된놈인데 bfs에서 미선택애가 있는경우(같은 그룹이 될 수 없는경우)
-				return false;
-			}
-		}
-		
-		startIdx = -1;
-		for (int i = 1; i <= n; i++) {
-			if (!visit[i]) { // 미선택된애 선택
-				startIdx = i;
-				break;
-			}
-		}
-		q = new LinkedList<>();
-		q.add(startIdx);
-		tmpVisit[startIdx] = true;
-		while (!q.isEmpty()) {
-			int now = q.poll();
-			for(int next: connect[now]) {
-				if(!visit[next] && !tmpVisit[next]) { // 미선택된놈이고 bfs에서도 미선택인경우
-					tmpVisit[next] = true;
-					q.add(next);
-				}
-			}
-		}
-		for(int i = 1; i<=n; i++) {
-			if(!visit[i] && !tmpVisit[i]) { // 미선택된놈이 bfs에서도 방문되지 않은경우
+			if(visit[i] == type && !tmpVisit[i]) {
 				return false;
 			}
 		}
