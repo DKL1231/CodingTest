@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -11,12 +14,47 @@ public class Main {
 	static char[] inp;
 	static char[] io = { 'I', 'O' };
 
-	static boolean check(int lp, int rp) {
-		for (int i = lp; i <= rp; i++) {
-			if (correct[i - lp] != inp[i])
-				return false;
+	static int[] getMatch(){
+		int m = correct.length;
+		int[] tmp = new int[m];
+		int begin = 1, matched = 0;
+		
+		while(begin + matched < m) {
+			if(correct[begin+matched] == correct[matched]) {
+				matched++;
+				tmp[begin+matched-1] = matched;
+			}
+			else {
+				if(matched==0) {
+					begin++;
+				}
+				else {
+					begin = begin+matched - tmp[matched-1];
+					matched = tmp[matched-1];
+				}
+			}
 		}
-		return true;
+		return tmp;
+	}
+	
+	static void KMP() {
+		int srcSize = inp.length, corSize = correct.length;
+		int[] tmp = getMatch();
+		int p = 0;
+		
+		for(int i = 0; i<srcSize; i++) { // 문자열을 순회하면서
+			while(p>0 && inp[i] != correct[p]) {
+				p = tmp[p-1];
+			}
+			if(inp[i] == correct[p]) {
+				if(p == corSize-1) {
+					answer++;
+					p = tmp[p];
+				}else {
+					p++;
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -29,25 +67,7 @@ public class Main {
 		for (int i = 0; i < 2 * n + 1; i++) {
 			correct[i] = io[i % 2];
 		}
-		boolean flag = false;
-		int rp = 2 * n;
-		int lp = 0;
-		int tmp = -1;
-		while (rp < m) {
-			if(flag && tmp==2 && inp[rp-1]=='O' && inp[rp] =='I') {
-				answer++;
-			}else {
-				flag = check(lp, rp);
-				if (flag)
-					answer++;
-			}
-			tmp = 0;
-			while ((rp < m && inp[lp] != 'I')||tmp==0) {
-				lp++;
-				rp++;
-				tmp++;
-			}
-		}
+		KMP();
 		System.out.println(answer);
 	}
 
