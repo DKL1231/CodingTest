@@ -11,7 +11,6 @@ class Things{
 	}
 }
 
-
 class Main {
 	static int n, m;
 
@@ -40,19 +39,20 @@ class Main {
 				list.add(new Things(k*v, k*c));
 		}
 		
-		int[][] dp = new int[list.size()+1][10001];
-		for(int i = 1; i<=m; i++) {
-			for(int j = 1; j<=list.size(); j++) {
-				Things now = list.get(j-1);
-				int w = now.w;
-				int v = now.v;
-				if(i-w >= 0) {
-					dp[j][i] = Math.max(dp[j-1][i], dp[j-1][i-w]+v);
-				}else {
-					dp[j][i] = dp[j-1][i];
+		int[] dp = new int[10001];
+		int answer = 0;
+		for(Things thing: list) {
+			int w = thing.w;
+			int v = thing.v;
+			for(int i = m; i>=w; i--) {
+				if(dp[i-w] != 0 || i == w) {
+					if(dp[i]<dp[i-w]+v) {
+						dp[i] = dp[i-w]+v;
+						answer = Math.max(answer, dp[i]);
+					}
 				}
 			}
 		}
-		System.out.println(dp[list.size()][m]);
+		System.out.println(answer);
 	}
 }
