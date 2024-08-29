@@ -3,18 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-class Status{
-    char[][] map;
-    int[] rb;
-    int[] bb;
-
-    public Status(char[][] map, int[] rb, int[] bb){
-        this.map = map;
-        this.rb = rb;
-        this.bb = bb;
-    }
-}
-
 public class Main {
     static int t, w;
     static int[][][] dp;
