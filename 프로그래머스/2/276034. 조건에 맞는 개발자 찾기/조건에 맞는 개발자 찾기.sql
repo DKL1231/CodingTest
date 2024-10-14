@@ -1,4 +1,8 @@
 select ID, EMAIL, FIRST_NAME, LAST_NAME
-from DEVELOPERS
-where SKILL_CODE > (SKILL_CODE ^ 256) OR SKILL_CODE > (SKILL_CODE ^ 1024)
+from DEVELOPERS as D
+where SKILL_CODE > (
+    select MIN(D.SKILL_CODE ^ S.CODE)
+    from SKILLCODES as S
+    where S.NAME in ("Python", "C#")
+)
 order by ID;
